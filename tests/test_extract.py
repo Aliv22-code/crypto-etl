@@ -4,7 +4,6 @@ Uses unittest.mock to fake the API call — no internet needed.
 """
 from unittest.mock import patch, MagicMock
 from datetime import datetime, timezone
-import pytest
 from pipelines.extract import fetch_prices
 
 
