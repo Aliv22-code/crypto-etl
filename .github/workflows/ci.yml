@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: Crypto Pipeline CI
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  lint-and-test:
+  test:
     runs-on: ubuntu-latest
 
     services:
@@ -20,7 +20,7 @@ jobs:
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U crypto_user -d crypto_db"
+          --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
@@ -33,23 +33,28 @@ jobs:
       DB_PASSWORD: crypto_pass
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Lint with ruff
-        run: ruff check pipelines/ tests/
+      - name: Lint
+        run: ruff check .
 
-      - name: Initialize database
-        run: PGPASSWORD=crypto_pass psql -h localhost -U crypto_user -d crypto_db -f sql/init.sql
+      - name: Init DB schema
+        run: |
+          psql postgresql://crypto_user:crypto_pass@localhost/crypto_db \
+            -f sql/init.sql
 
-      - name: Run tests
-        run: pytest tests/ -v
+      - name: Unit tests
+        run: pytest tests/test_extract.py -v
 
+      - name: Integration tests
+        run: pytest tests/test_load.py -v
+
+      - name: Coverage
+        run: pytest --cov=pipelines --cov-report=term-missing --cov-fail-under=75
