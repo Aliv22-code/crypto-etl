@@ -2,7 +2,7 @@
 Unit test for pipeline.py — mocks extract, validate and load
 so no real API call or DB connection is needed.
 """
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 from datetime import datetime, timezone
 from pipelines.pipeline import run
 
