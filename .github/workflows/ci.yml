@@ -69,3 +69,6 @@ jobs:
       - name: dbt test
         working-directory: dbt_project
         run: dbt test --profiles-dir .
+      # ── Docker build check ────────────────────────────────────
+      - name: Build Docker image
+        run: docker build -t crypto-pipeline:ci .
