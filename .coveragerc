@@ -1,0 +1,7 @@
+[run]
+omit =
+    pipelines/flow.py        # Prefect orchestration — not unit testable
+    pipelines/logger.py      # logging setup — not unit testable
+
+[report]
+fail_under = 75

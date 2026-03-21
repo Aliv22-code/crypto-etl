@@ -40,7 +40,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r requirements.txt dbt-postgres
 
       - name: Lint
         run: ruff check .
@@ -57,8 +57,9 @@ jobs:
         run: pytest tests/test_load.py -v
 
       - name: Coverage
-        run: pytest --cov=pipelines --cov-report=term-missing --cov-fail-under=75
-      # ── dbt steps ────────────────────────────────────────────
+        run: pytest --cov=pipelines --cov-report=term-missing --cov-fail-under=75 --cov-config=.coveragerc
+
+      # ── dbt steps ─────────────────────────────────────────────
       - name: Run Python pipeline (fill raw data)
         run: python -m pipelines.pipeline
 
@@ -69,6 +70,7 @@ jobs:
       - name: dbt test
         working-directory: dbt_project
         run: dbt test --profiles-dir .
+
       # ── Docker build check ────────────────────────────────────
       - name: Build Docker image
         run: docker build -t crypto-pipeline:ci .
