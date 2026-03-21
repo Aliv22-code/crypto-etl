@@ -1,0 +1,57 @@
+version: 2
+
+models:
+  - name: stg_crypto_prices
+    description: "Clean view on top of raw crypto_prices table"
+    columns:
+      - name: id
+        description: "Primary key"
+        tests:
+          - unique
+          - not_null
+
+      - name: coin_id
+        description: "Coin identifier e.g. bitcoin"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["bitcoin", "ethereum", "solana", "cardano", "dogecoin"]
+
+      - name: price_usd
+        description: "Price in USD"
+        tests:
+          - not_null
+
+      - name: fetched_at
+        description: "When the price was fetched"
+        tests:
+          - not_null
+
+  - name: daily_coin_summary
+    description: "Daily average, high, low price per coin"
+    columns:
+      - name: coin_id
+        tests:
+          - not_null
+
+      - name: avg_price_usd
+        tests:
+          - not_null
+
+      - name: fetch_count
+        tests:
+          - not_null
+
+  - name: top_movers
+    description: "Latest price snapshot per coin with movement label"
+    columns:
+      - name: coin_id
+        tests:
+          - unique
+          - not_null
+
+      - name: movement_label
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["gainer", "loser", "stable"]

@@ -58,3 +58,14 @@ jobs:
 
       - name: Coverage
         run: pytest --cov=pipelines --cov-report=term-missing --cov-fail-under=75
+      # ── dbt steps ────────────────────────────────────────────
+      - name: Run Python pipeline (fill raw data)
+        run: python pipelines/pipeline.py
+
+      - name: dbt run
+        working-directory: dbt_project
+        run: dbt run --profiles-dir .
+
+      - name: dbt test
+        working-directory: dbt_project
+        run: dbt test --profiles-dir .

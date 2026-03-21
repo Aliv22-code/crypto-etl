@@ -1,0 +1,13 @@
+name: crypto_pipeline
+version: "1.0.0"
+profile: crypto_pipeline        # must match name in profiles.yml
+
+model-paths: ["models"]
+test-paths:  ["tests"]
+
+models:
+  crypto_pipeline:
+    staging:
+      +materialized: view       # staging = views (lightweight)
+    marts:
+      +materialized: table      # marts = real tables (fast to query)
