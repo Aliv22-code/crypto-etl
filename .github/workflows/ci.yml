@@ -60,7 +60,7 @@ jobs:
         run: pytest --cov=pipelines --cov-report=term-missing --cov-fail-under=75
       # ── dbt steps ────────────────────────────────────────────
       - name: Run Python pipeline (fill raw data)
-        run: python pipelines/pipeline.py
+        run: python -m pipelines.pipeline
 
       - name: dbt run
         working-directory: dbt_project
