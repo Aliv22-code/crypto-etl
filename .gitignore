@@ -1,11 +1,11 @@
 venv/
 __pycache__/
 *.pyc
-.pytest_cache/
+*.pyo
 .env
 *.egg-info/
+.pytest_cache/
 logs/
 dbt_project/target/
 dbt_project/dbt_packages/
 dbt_project/logs/
-
