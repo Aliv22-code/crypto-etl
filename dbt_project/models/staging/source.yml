@@ -2,6 +2,5 @@ version: 2
 
 sources:
   - name: public
-    database: crypto_db
     tables:
       - name: crypto_prices

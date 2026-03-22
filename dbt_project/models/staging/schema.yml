@@ -33,11 +33,9 @@ models:
       - name: coin_id
         tests:
           - not_null
-
       - name: avg_price_usd
         tests:
           - not_null
-
       - name: fetch_count
         tests:
           - not_null
@@ -49,7 +47,6 @@ models:
         tests:
           - unique
           - not_null
-
       - name: movement_label
         tests:
           - not_null
