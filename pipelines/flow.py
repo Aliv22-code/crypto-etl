@@ -11,6 +11,7 @@ from pipelines.extract import fetch_prices
 from pipelines.load    import load_prices
 
 
+
 # ── Tasks ─────────────────────────────────────────────────────────────────────
 
 @task(name="extract-crypto-prices", retries=3, retry_delay_seconds=30)
@@ -79,10 +80,10 @@ def crypto_pipeline():
     return count
 
 
-# ── Deploy with hourly schedule ───────────────────────────────────────────────
+# ── Deploy with 6-hour schedule ──────────────────────────────────────────────
 if __name__ == "__main__":
     crypto_pipeline.serve(
-        name="crypto-pipeline-hourly",
-        interval=timedelta(hours=1),
+        name="crypto-pipeline-6h",
+        interval=timedelta(hours=6),
         pause_on_shutdown=False,
     )
