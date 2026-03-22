@@ -1,0 +1,24 @@
+services:
+  - type: worker
+    name: crypto-pipeline
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true        # redeploys on every push to main
+
+    envVars:
+      - key: PYTHONPATH
+        value: /app
+      - key: DB_HOST
+        sync: false         # set secretly in Render dashboard
+      - key: DB_PORT
+        sync: false
+      - key: DB_NAME
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: PREFECT_API_KEY
+        sync: false
+      - key: PREFECT_API_URL
+        sync: false
