@@ -9,7 +9,7 @@ on:
 
 jobs:
   # ── Job 1: always runs on push ────────────────────────────
-  crypto-pipeline-ci:
+  test:
     runs-on: ubuntu-latest
 
     services:
@@ -36,9 +36,9 @@ jobs:
       PYTHONPATH:  ${{ github.workspace }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.11"
 
@@ -79,7 +79,7 @@ jobs:
   # ── Job 2: only runs when manually triggered ──────────────
   deploy:
     runs-on: ubuntu-latest
-    needs: crypto-pipeline-ci              # test must pass first
+    needs: test              # test must pass first
     if: github.event_name == 'workflow_dispatch'  # only on manual trigger
 
     steps:
